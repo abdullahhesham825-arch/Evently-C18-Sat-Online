@@ -1,5 +1,6 @@
 import 'package:evently_sat_online/features/auth/login/login_screen.dart';
 import 'package:evently_sat_online/features/auth/register/register_screen.dart';
+import 'package:evently_sat_online/features/home/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 class RoutesManager{
@@ -13,6 +14,9 @@ class RoutesManager{
       }
       case register:{
         return CupertinoPageRoute(builder: (_)=>RegisterScreen());
+      }
+      case homeScreen:{
+        return CupertinoPageRoute(builder: (_)=>HomeScreen());
       }
     }
   }

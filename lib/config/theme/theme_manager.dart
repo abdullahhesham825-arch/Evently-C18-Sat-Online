@@ -5,7 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ThemeManager{
   static ThemeData light = ThemeData(
+    dividerColor: ColorsManager.grey,
+    primaryColor: ColorsManager.white,
     scaffoldBackgroundColor: ColorsManager.whiteF4,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+
+      backgroundColor: ColorsManager.white,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: ColorsManager.blue,
+      unselectedItemColor: ColorsManager.darkGrey,
+        showUnselectedLabels: true,
+      showSelectedLabels: true
+    ),
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16.r),
@@ -41,7 +52,16 @@ class ThemeManager{
     textTheme: TextTheme(
       labelSmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w600, color: ColorsManager.blue, ),
       labelMedium: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w400, color: ColorsManager.darkGrey),
-      headlineLarge: GoogleFonts.poppins(fontSize: 24.sp, fontWeight:FontWeight.w600,color: ColorsManager.blue )
+      labelLarge: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w600, color: ColorsManager.white),
+      headlineLarge: GoogleFonts.poppins(fontSize: 24.sp, fontWeight:FontWeight.w600,color: ColorsManager.blue ),
+      headlineSmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight:FontWeight.w400,color: ColorsManager.darkGrey ),
+      headlineMedium: GoogleFonts.poppins(fontSize: 20.sp, fontWeight:FontWeight.w500,color: ColorsManager.black ),
+      titleSmall: GoogleFonts.poppins(fontSize: 16.sp, fontWeight:FontWeight.w600,color: ColorsManager.blue )
+     , titleMedium: GoogleFonts.poppins(fontSize: 14.sp, fontWeight:FontWeight.w500,color: ColorsManager.blue )
+        ,displayMedium: GoogleFonts.poppins(fontSize: 20.sp, fontWeight: FontWeight.w600, color: ColorsManager.black)
+        ,displaySmall: GoogleFonts.poppins(fontSize: 14.sp, fontWeight: FontWeight.w400, color: ColorsManager.darkGrey)
+        ,displayLarge: GoogleFonts.poppins(fontSize: 16.sp, fontWeight: FontWeight.w500, color: ColorsManager.black)
+
     )
   );
   static ThemeData dark = ThemeData();

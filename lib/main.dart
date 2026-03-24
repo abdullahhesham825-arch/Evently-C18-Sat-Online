@@ -19,7 +19,7 @@ class Evenlty extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, _)=>MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: RoutesManager.login,
+        initialRoute: RoutesManager.homeScreen,
         onGenerateRoute: RoutesManager.router,
         theme:ThemeManager.light ,
         darkTheme: ThemeManager.dark,

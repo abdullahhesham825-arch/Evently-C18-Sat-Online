@@ -1,0 +1,41 @@
+import 'package:evently_sat_online/features/home/tabs/favourite_tab/favourite_tab.dart';
+import 'package:evently_sat_online/features/home/tabs/home_tab/home_tab.dart';
+import 'package:evently_sat_online/features/home/tabs/profile/profile_tab.dart';
+import 'package:flutter/material.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Widget> tabs = [HomeTab(), FavouriteTab(), ProfileTab()];
+  int currentIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: tabs[currentIndex],
+      bottomNavigationBar:_buildBottomNavBar,
+    );
+  }
+
+
+  BottomNavigationBar get _buildBottomNavBar{
+    return BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: _onTap,
+        items: [
+          BottomNavigationBarItem(icon: Icon(currentIndex == 0 ? Icons.home_filled : Icons.home_outlined), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(currentIndex == 1 ? Icons.favorite : Icons.favorite_border), label: "Favourite"),
+          BottomNavigationBarItem(icon: Icon(currentIndex == 2 ? Icons.person : Icons.person_2_outlined), label: "Profile"),
+        ]);
+  }
+
+  void _onTap(int newIndex){
+    setState(() {
+      currentIndex = newIndex;
+    });
+  }
+}
