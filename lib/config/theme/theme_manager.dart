@@ -5,9 +5,21 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ThemeManager{
   static ThemeData light = ThemeData(
+    useMaterial3: true,
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorsManager.whiteF4,
+      foregroundColor: ColorsManager.black,
+      centerTitle: true,
+      titleTextStyle: GoogleFonts.poppins(color: ColorsManager.black,fontSize: 18.sp, fontWeight: FontWeight.w500)
+    ),
     dividerColor: ColorsManager.grey,
     primaryColor: ColorsManager.white,
     scaffoldBackgroundColor: ColorsManager.whiteF4,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorsManager.blue,
+      foregroundColor: ColorsManager.white,
+shape: CircleBorder()
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
 
       backgroundColor: ColorsManager.white,

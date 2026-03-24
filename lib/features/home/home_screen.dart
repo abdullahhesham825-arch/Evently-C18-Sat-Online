@@ -1,3 +1,5 @@
+import 'package:evently_sat_online/core/resources/colors_manager.dart';
+import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_sat_online/features/home/tabs/favourite_tab/favourite_tab.dart';
 import 'package:evently_sat_online/features/home/tabs/home_tab/home_tab.dart';
 import 'package:evently_sat_online/features/home/tabs/profile/profile_tab.dart';
@@ -16,6 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      floatingActionButton: FloatingActionButton(
+
+
+        onPressed: (){
+          Navigator.pushNamed(context, RoutesManager.createEvent);
+        }, child: Icon(Icons.add, ),),
       body: tabs[currentIndex],
       bottomNavigationBar:_buildBottomNavBar,
     );
@@ -24,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   BottomNavigationBar get _buildBottomNavBar{
     return BottomNavigationBar(
+
+
         currentIndex: currentIndex,
         onTap: _onTap,
         items: [

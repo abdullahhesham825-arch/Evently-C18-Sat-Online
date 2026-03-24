@@ -1,5 +1,6 @@
 import 'package:evently_sat_online/core/resources/colors_manager.dart';
-import 'package:evently_sat_online/features/home/tabs/home_tab/tab_item.dart';
+import 'package:evently_sat_online/core/widgets/custom_tab_bar.dart';
+import 'package:evently_sat_online/core/widgets/tab_item.dart';
 import 'package:evently_sat_online/model/category_model.dart';
 import 'package:evently_sat_online/model/event_model.dart';
 import 'package:flutter/material.dart';
@@ -55,34 +56,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           SizedBox(height: 24.h),
-          DefaultTabController(
-            length: 5,
-            child: TabBar(
-              onTap: (index) {
-                setState(() {
-                  selectedIndex = index;
-                });
-              },
-              tabAlignment: TabAlignment.start,
-              isScrollable: true,
-              dividerColor: Colors.transparent,
-              indicatorColor: Colors.transparent,
-              tabs: CategoryModel.categories
-                  .map(
-                    (category) => TabItem(
-                      category: category,
-                      selectedBgColor: ColorsManager.blue,
-                      selectedFgColor: Colors.white,
-                      unSelectedBgColor: ColorsManager.white,
-                      unSelectedFgColor: ColorsManager.black,
-                      isSelected:
-                          CategoryModel.categories.indexOf(category) ==
-                          selectedIndex,
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
+          CustomTabBar(categories: CategoryModel.categoriesWithAll,),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
