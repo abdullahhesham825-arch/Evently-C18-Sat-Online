@@ -14,12 +14,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+  late AppLocalizations appLocalizations;
 
   List<Widget> tabs = [HomeTab(), FavouriteTab(), ProfileTab()];
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       extendBody: true,
       floatingActionButton: FloatingActionButton(
@@ -29,12 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.pushNamed(context, RoutesManager.createEvent);
         }, child: Icon(Icons.add, ),),
       body: tabs[currentIndex],
-      bottomNavigationBar:_buildBottomNavBar,
+      bottomNavigationBar:_buildBottomNavBar(),
     );
   }
 
 
-  BottomNavigationBar get _buildBottomNavBar{
+  BottomNavigationBar  _buildBottomNavBar(){
     return BottomNavigationBar(
 
 
