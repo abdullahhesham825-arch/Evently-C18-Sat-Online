@@ -4,6 +4,7 @@ import 'package:evently_sat_online/core/utils/validator.dart';
 import 'package:evently_sat_online/core/widgets/custom_elevated_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,7 +16,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
- late  TextEditingController _nameController ;
+  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+
+  late  TextEditingController _nameController ;
 
   late TextEditingController _emailController ;
 
@@ -57,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Image.asset(ImageAssets.evenltyLogo),
 
                 Text(
-                  "Create Your Account",
+                 appLocalizations.create_your_account,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 SizedBox(height: 24.h),
@@ -65,14 +68,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextFormField(
                   validator: Validator.validateName,
                   controller: _nameController,
-                  hintText: "Enter your name",
+                  hintText: appLocalizations.enter_your_name,
                   prefixIcon: Icon(Icons.person_2_outlined),
                 ),
                 SizedBox(height: 16.h),
                 CustomTextFormField(
                   validator: Validator.validateEmail,
                   controller: _emailController,
-                  hintText: "Enter your email",
+                  hintText: appLocalizations.enter_your_email,
                   prefixIcon: Icon(Icons.email_outlined),
                 ),
                 SizedBox(height: 16.h),
@@ -81,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   isSecure: securePassword,
                   validator: Validator.validatePassword,
                   controller: _passwordController,
-                  hintText: "Enter your password",
+                  hintText: appLocalizations.enter_your_password,
                   prefixIcon: Icon(Icons.lock_clock_outlined),
                   suffixIcon: IconButton(onPressed: (){
                     setState(() {
@@ -103,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   controller: _confirmPasswordController,
-                  hintText: "Confirm your password",
+                  hintText: appLocalizations.confirm_your_password,
                   prefixIcon: Icon(Icons.lock_clock_outlined),
                   suffixIcon: IconButton(onPressed: (){
                     setState(() {
@@ -112,17 +115,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   }, icon:Icon(secureConfirmPassword ? Icons.visibility_off : Icons.visibility) ),
                 ),
                 SizedBox(height: 60.h),
-                CustomElevatedButton(title: "Sign Up", onClick: _register,),
+                CustomElevatedButton(title:appLocalizations.sing_up, onClick: _register,),
                 SizedBox(height: 24.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account? ",
+                     "${appLocalizations.already_have_an_account} ",
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                     CustomTextButton(
-                      title: "Sign In",
+                      title:appLocalizations.login,
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,

@@ -5,6 +5,7 @@ import 'package:evently_sat_online/core/resources/assets_manager.dart';
 import 'package:evently_sat_online/core/widgets/custom_tab_bar.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:evently_sat_online/model/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +19,7 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
   DateTime selectedDateTime = DateTime.now(); /// 24/3/2026 -> 9:44
   TimeOfDay pickedTime = TimeOfDay.now();
   @override
@@ -26,7 +28,7 @@ class _CreateEventState extends State<CreateEvent> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Event"),
+        title: Text(appLocalizations.add_event),
       ),
       body: Padding(
         padding:  REdgeInsets.symmetric(horizontal: 16),
@@ -38,15 +40,15 @@ class _CreateEventState extends State<CreateEvent> {
                 child: Image.asset(ImageAssets.meeting)),
             SizedBox(height: 16.h,),
 
-            CustomTabBar(categories: CategoryModel.categories,),
+            CustomTabBar(categories: CategoryModel.getCategories(context),),
             SizedBox(height: 16.h,),
-            Text("Title", style: Theme.of(context).textTheme.displayLarge,),
+            Text(appLocalizations.title, style: Theme.of(context).textTheme.displayLarge,),
             SizedBox(height: 8.h,),
-            CustomTextFormField(hintText: "Event title"),
+            CustomTextFormField(hintText: appLocalizations.event_title),
             SizedBox(height: 16.h,),
-            Text("Description", style: Theme.of(context).textTheme.displayLarge,),
+            Text(appLocalizations.description, style: Theme.of(context).textTheme.displayLarge,),
             SizedBox(height: 8.h,),
-            CustomTextFormField(hintText: "Event description", maxLines: 4,),
+            CustomTextFormField(hintText: appLocalizations.event_description, maxLines: 4,),
 SizedBox(height: 16.h,),
             Row(
               children: [
@@ -55,7 +57,7 @@ SizedBox(height: 16.h,),
                 Text(selectedDateTime.getFormattedDate, style: Theme.of(context).textTheme.displayLarge,),
                 Spacer(),
                 CustomTextButton(
-                  title: "Choose Date", onTap: _selectEventData
+                  title: appLocalizations.choose_date, onTap: _selectEventData
                    ,)
               ],
             ),
@@ -66,7 +68,7 @@ SizedBox(height: 16.h,),
                 SizedBox(width: 4.w,),
                 Text(selectedDateTime.getFormattedTime, style: Theme.of(context).textTheme.displayLarge,),
                 Spacer(),
-                CustomTextButton(title: "Choose Time", onTap: _chooseEventTime,)
+                CustomTextButton(title: appLocalizations.choose_time, onTap: _chooseEventTime,)
               ],
             ),
 

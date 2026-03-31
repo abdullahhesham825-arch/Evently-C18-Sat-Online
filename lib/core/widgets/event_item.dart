@@ -26,10 +26,7 @@ borderRadius: BorderRadius.circular(16.r),
           Card(
             margin: REdgeInsets.all(8),
 
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.r)
-            ),
-            color: ColorsManager.whiteF4,
+
             child: Padding(
               padding:  REdgeInsets.all(8.0),
               child: Text("21 Jan", style: Theme.of(context).textTheme.titleSmall,),
@@ -42,7 +39,7 @@ borderRadius: BorderRadius.circular(16.r),
               padding:  REdgeInsets.all(8.0),
               child: Row(children: [
                 Expanded(child: Text(event.title, style: Theme.of(context).textTheme.titleMedium,)),
-                Icon(Icons.favorite_border, color: ColorsManager.blue,)
+                Icon(Icons.favorite_border, )
               ],),
             ),
           )

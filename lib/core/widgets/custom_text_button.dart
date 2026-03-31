@@ -12,7 +12,7 @@ VoidCallback? onTap;
         onTap:onTap,
         child: Text(title,
 
-          textAlign: align,style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400,color:ColorsManager.blue,decoration: TextDecoration.underline, decorationColor: Colors.blue)
+          textAlign: align,style: Theme.of(context).textTheme.titleLarge,
 
          ));
   }

@@ -1,9 +1,11 @@
 import 'package:evently_sat_online/core/resources/assets_manager.dart';
+import 'package:evently_sat_online/core/resources/colors_manager.dart';
 import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_sat_online/core/utils/validator.dart';
 import 'package:evently_sat_online/core/widgets/custom_elevated_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,6 +34,7 @@ bool securePassword = true;
     _passwordController.dispose();
     super.dispose();
   }
+  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +47,10 @@ bool securePassword = true;
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset(ImageAssets.evenltyLogo),
+                Image.asset(ImageAssets.evenltyLogo, color: ColorsManager.blue,),
 
                 Text(
-                  "Login to your account",
+                 appLocalizations.login_to_your_account,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 SizedBox(height: 24.h),
@@ -55,7 +58,7 @@ bool securePassword = true;
                 CustomTextFormField(
                   validator: Validator.validateEmail,
                   controller: _emailController,
-                  hintText: "Enter your email",
+                  hintText: appLocalizations.enter_your_email,
                   prefixIcon: Icon(Icons.email_outlined),
                 ),
                 SizedBox(height: 16.h),
@@ -64,7 +67,7 @@ bool securePassword = true;
                   isSecure: securePassword,
                   validator: Validator.validatePassword,
                   controller: _passwordController,
-                  hintText: "Enter your password",
+                  hintText: appLocalizations.enter_your_password,
                   prefixIcon: Icon(Icons.lock_clock_outlined),
                   suffixIcon:IconButton(onPressed: (){
                     setState(() {
@@ -75,23 +78,23 @@ bool securePassword = true;
                 ),
                 SizedBox(height: 8.h),
                 CustomTextButton(
-                  title: "Forget Password ?",
+                  title: appLocalizations.forget_password,
                   align: TextAlign.end,
                 ),
 
                 SizedBox(height: 47.h),
-                CustomElevatedButton(title: "Login", onClick: _login,),
+                CustomElevatedButton(title: appLocalizations.login, onClick: _login,),
                 SizedBox(height: 47.h),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don’t have an account ? ",
+                      appLocalizations.dont_have_an_account,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                     CustomTextButton(
-                      title: "Sign up",
+                      title:appLocalizations.sing_up,
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,

@@ -1,12 +1,13 @@
 import 'package:evently_sat_online/core/resources/colors_manager.dart';
 import 'package:evently_sat_online/core/widgets/custom_tab_bar.dart';
 import 'package:evently_sat_online/core/widgets/tab_item.dart';
+import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:evently_sat_online/model/category_model.dart';
 import 'package:evently_sat_online/model/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'event_item.dart';
+import '../../../../core/widgets/event_item.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -17,6 +18,8 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   int selectedIndex = 0;
+  late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class _HomeTabState extends State<HomeTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Welcome Back ✨",
+                      "${appLocalizations.welcome_back} ✨",
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
@@ -41,9 +44,9 @@ class _HomeTabState extends State<HomeTab> {
                   ],
                 ),
                 Spacer(),
-                Icon(Icons.light_mode_outlined, color: ColorsManager.blue),
+                Icon(Icons.light_mode_outlined,),
                 Card(
-                  color: ColorsManager.blue,
+                  color: ColorsManager.darkBlue,
                   child: Padding(
                     padding: REdgeInsets.symmetric(vertical: 5, horizontal: 8),
                     child: Text(
@@ -56,14 +59,14 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           SizedBox(height: 24.h),
-          CustomTabBar(categories: CategoryModel.categoriesWithAll,),
+          CustomTabBar(categories: CategoryModel.getCategoriesWithAll(context),),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               itemBuilder: (context, index) => EventItem(
                 event: EventModel(
                   id: "1",
-                  category: CategoryModel.categories[0],
+                  category: CategoryModel.getCategories(context)[0],
                   title: "Meeting for Updating The Development Method ",
                   description: "Meeting for Updating The Development Method ",
                   date: DateTime.now(),
