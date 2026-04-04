@@ -1,4 +1,5 @@
 import 'package:evently_sat_online/config/theme/theme_manager.dart';
+import 'package:evently_sat_online/core/prefs_manager/prefs_manager.dart';
 import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:evently_sat_online/providers/lang_provider.dart';
@@ -8,7 +9,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await PrefsManager.init();
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=> ThemeProvider()),
@@ -35,7 +39,7 @@ class Evenlty extends StatelessWidget {
         onGenerateRoute: RoutesManager.router,
         theme:ThemeManager.light ,
         darkTheme: ThemeManager.dark,
-        themeMode: themeProvider.currentTheme,
+        themeMode:  themeProvider.currentTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: [
           Locale('en'),
