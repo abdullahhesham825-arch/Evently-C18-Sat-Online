@@ -4,6 +4,7 @@ import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:evently_sat_online/providers/lang_provider.dart';
 import 'package:evently_sat_online/providers/theme_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,7 @@ import 'package:provider/provider.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await PrefsManager.init();
+  await Firebase.initializeApp();
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=> ThemeProvider()),
@@ -35,7 +37,7 @@ class Evenlty extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, _)=>MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: RoutesManager.homeScreen,
+        initialRoute: RoutesManager.login,
         onGenerateRoute: RoutesManager.router,
         theme:ThemeManager.light ,
         darkTheme: ThemeManager.dark,

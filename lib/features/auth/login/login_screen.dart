@@ -1,11 +1,13 @@
 import 'package:evently_sat_online/core/resources/assets_manager.dart';
 import 'package:evently_sat_online/core/resources/colors_manager.dart';
 import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
+import 'package:evently_sat_online/core/ui_utils/dialog_utils.dart';
 import 'package:evently_sat_online/core/utils/validator.dart';
 import 'package:evently_sat_online/core/widgets/custom_elevated_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_form_field.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -113,7 +115,22 @@ bool securePassword = true;
   }
 
 
-  void _login(){
-    if(_formKey.currentState?.validate() == false)return ;
+  void _login()async{
+   // if(_formKey.currentState?.validate() == false)return ;
+    try{
+      DialogUtils.showLoading(context, dismissible: false);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
+      DialogUtils.hideDialog(context);
+      DialogUtils.showToastMessage(
+          message: "User Logged-In Successfully", bgColor: Colors.green);
+      Navigator.pushReplacementNamed(context, RoutesManager.homeScreen);
+    }on FirebaseAuthException catch(exception){
+     DialogUtils.hideDialog(context);
+     DialogUtils.showToastMessage(message: "Wrong email or password", bgColor: Colors.red);
+    }catch(exception){
+      DialogUtils.hideDialog(context);
+      DialogUtils.showToastMessage(message: exception.toString(), bgColor: Colors.red);
+    }
   }
 }
