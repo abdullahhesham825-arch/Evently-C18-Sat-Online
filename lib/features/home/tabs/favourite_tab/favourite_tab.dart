@@ -1,7 +1,9 @@
 import 'package:evently_sat_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:evently_sat_online/model/category_model.dart';
 import 'package:evently_sat_online/model/event_model.dart';
+import 'package:evently_sat_online/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,24 +23,29 @@ class FavouriteTab extends StatelessWidget {
           children: [
             CustomTextFormField(hintText: appLocalizations.search_for_event, suffixIcon: Icon(Icons.search),),
             SizedBox(height: 16.h,),
-            Expanded(
-              child: ListView.separated(
+            FutureBuilder(future: FirebaseService.getFavouriteEvents(context,),
+                builder: (context, snapshot){
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return Center(child: CircularProgressIndicator(),);
+              }
+              if(snapshot.hasError){
+                return Center(child: Text(snapshot.error.toString()),);
+              }
+              List<EventModel> favouriteEvents = snapshot.data!;
+              return  Expanded(
+                child: ListView.separated(
 
-                itemBuilder: (context, index) => EventItem(
-                  event: EventModel(
-                    id: "1",
-                    category: CategoryModel.getCategories(context)[0],
-                    title: "Meeting for Updating The Development Method ",
-                    description: "Meeting for Updating The Development Method ",
-                    date: DateTime.now(),
-                    time: TimeOfDay.now(),
+                  itemBuilder: (context, index) => EventItem(
+                    event: favouriteEvents[index],
+                    markAsFavourite: true,
                   ),
-                ),
 
-                separatorBuilder: (context, index)=>SizedBox(height: 16.h,),
-                itemCount: 20,
-              ),
-            ),
+                  separatorBuilder: (context, index)=>SizedBox(height: 16.h,),
+                  itemCount: favouriteEvents.length,
+                ),
+              );
+                })
+
 
           ],
         ),

@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.evently_sat_online"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

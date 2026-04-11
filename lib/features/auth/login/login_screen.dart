@@ -6,7 +6,9 @@ import 'package:evently_sat_online/core/utils/validator.dart';
 import 'package:evently_sat_online/core/widgets/custom_elevated_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
+import 'package:evently_sat_online/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -119,12 +121,12 @@ bool securePassword = true;
    // if(_formKey.currentState?.validate() == false)return ;
     try{
       DialogUtils.showLoading(context, dismissible: false);
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
-      DialogUtils.hideDialog(context);
+    UserCredential credential =   await FirebaseService.login(email: _emailController.text, password: _passwordController.text);
+     UserModel.currentUser = await FirebaseService.getUserFromFirStore(credential.user!.uid);
+    DialogUtils.hideDialog(context);
       DialogUtils.showToastMessage(
           message: "User Logged-In Successfully", bgColor: Colors.green);
-      Navigator.pushReplacementNamed(context, RoutesManager.homeScreen);
+      Navigator.pushReplacementNamed(context, RoutesManager.homeScreen,);
     }on FirebaseAuthException catch(exception){
      DialogUtils.hideDialog(context);
      DialogUtils.showToastMessage(message: "Wrong email or password", bgColor: Colors.red);

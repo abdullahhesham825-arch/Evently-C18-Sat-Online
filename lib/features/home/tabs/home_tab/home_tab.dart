@@ -1,9 +1,10 @@
 import 'package:evently_sat_online/core/resources/colors_manager.dart';
 import 'package:evently_sat_online/core/widgets/custom_tab_bar.dart';
-import 'package:evently_sat_online/core/widgets/tab_item.dart';
+import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
 import 'package:evently_sat_online/model/category_model.dart';
 import 'package:evently_sat_online/model/event_model.dart';
+import 'package:evently_sat_online/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,8 +20,7 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   int selectedIndex = 0;
   late AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-
-
+late CategoryModel selectedCategory = CategoryModel.getCategoriesWithAll(context)[0];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,13 +38,13 @@ class _HomeTabState extends State<HomeTab> {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
-                      "Muhammed Saad",
+                      UserModel.currentUser!.name,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ],
                 ),
                 Spacer(),
-                Icon(Icons.light_mode_outlined,),
+                Icon(Icons.light_mode_outlined),
                 Card(
                   color: ColorsManager.darkBlue,
                   child: Padding(
@@ -59,24 +59,39 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
           SizedBox(height: 24.h),
-          CustomTabBar(categories: CategoryModel.getCategoriesWithAll(context),),
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              itemBuilder: (context, index) => EventItem(
-                event: EventModel(
-                  id: "1",
-                  category: CategoryModel.getCategories(context)[0],
-                  title: "Meeting for Updating The Development Method ",
-                  description: "Meeting for Updating The Development Method ",
-                  date: DateTime.now(),
-                  time: TimeOfDay.now(),
-                ),
-              ),
+          CustomTabBar(categories: CategoryModel.getCategoriesWithAll(context), onCategoryItemClicked: (newCategory){
+            setState(() {
+              selectedCategory = newCategory;
 
-              separatorBuilder: (context, index)=>SizedBox(height: 16.h,),
-              itemCount: 20,
-            ),
+            });
+          },),
+
+          StreamBuilder(
+            stream: FirebaseService.getEventsFromFireStoreRealTime(context,selectedCategory),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text(snapshot.error.toString()));
+              }
+
+              List<EventModel> events = snapshot.data!;
+              return Expanded(
+                child: ListView.separated(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 24,
+                        ),
+                        itemBuilder: (context, index) =>
+                            EventItem(event: events[index], markAsFavourite: UserModel.currentUser!.favouriteEventsIds.contains(events[index].id),),
+
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 16.h),
+                        itemCount: events.length,
+                      ),
+              );
+            },
           ),
         ],
       ),

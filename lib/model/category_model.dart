@@ -10,7 +10,11 @@ class CategoryModel{
 
 
 
-
+Map<String, dynamic> toJson()=>{
+  'id':id,
+  'name': name,
+  'image':image
+};
 
   static List<CategoryModel> getCategories(BuildContext context){
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;

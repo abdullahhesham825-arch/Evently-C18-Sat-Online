@@ -5,7 +5,9 @@ import 'package:evently_sat_online/core/utils/validator.dart';
 import 'package:evently_sat_online/core/widgets/custom_elevated_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_button.dart';
 import 'package:evently_sat_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:evently_sat_online/l10n/app_localizations.dart';
+import 'package:evently_sat_online/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -166,11 +168,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // if (_formKey.currentState?.validate() == false) return;
     try {
       DialogUtils.showLoading(context, dismissible: false);
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
+     UserCredential credential = await FirebaseService.register(email: _emailController.text, password: _passwordController.text);
      DialogUtils.hideDialog(context);
+     UserModel user = UserModel(id: credential.user!.uid, name: _nameController.text, email: _emailController.text, favouriteEventsIds: []);
+     await FirebaseService.addUserToFireStore(user);
       DialogUtils.showToastMessage(
         message: "Successfully Registration",
         bgColor: Colors.green,

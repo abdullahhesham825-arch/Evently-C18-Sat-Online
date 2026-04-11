@@ -1,11 +1,13 @@
+
 import 'package:evently_sat_online/core/resources/colors_manager.dart';
 import 'package:evently_sat_online/core/widgets/tab_item.dart';
 import 'package:evently_sat_online/model/category_model.dart';
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatefulWidget {
-   CustomTabBar({super.key, required this.categories});
+   CustomTabBar({super.key, required this.categories,this.onCategoryItemClicked });
 List<CategoryModel> categories;
+void Function(CategoryModel)? onCategoryItemClicked;
   @override
   State<CustomTabBar> createState() => _CustomTabBarState();
 }
@@ -20,6 +22,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
         onTap: (index) {
           setState(() {
             selectedIndex = index;
+            widget.onCategoryItemClicked?.call(widget.categories[selectedIndex]);
           });
         },
         tabAlignment: TabAlignment.start,
