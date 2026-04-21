@@ -5,6 +5,7 @@ import 'package:evently_sat_online/model/event_model.dart';
 import 'package:evently_sat_online/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseService{
  static Future<UserCredential>register({required String email, required String password})async{
@@ -16,8 +17,42 @@ static Future<UserCredential> login({required String email, required String pass
  return userCredential;
   }
 
+ static Future<UserCredential?> signInWithGoogle() async {
+   try {
+     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+     if (googleUser == null) return null;
+
+     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+     final AuthCredential credential = GoogleAuthProvider.credential(
+       accessToken: googleAuth.accessToken,
+       idToken: googleAuth.idToken,
+     );
+
+     UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+     // Check if user exists in Firestore, if not add them
+     DocumentSnapshot userDoc = await getUsersCollection().doc(userCredential.user!.uid).get();
+     if (!userDoc.exists) {
+       UserModel newUser = UserModel(
+         id: userCredential.user!.uid,
+         name: userCredential.user!.displayName ?? "",
+         email: userCredential.user!.email ?? "",
+         favouriteEventsIds: [],
+       );
+       await addUserToFireStore(newUser);
+     }
+
+     return userCredential;
+   } catch (e) {
+     print(e);
+     return null;
+   }
+ }
+
 
  static Future<void> logout()async{
+   await GoogleSignIn().signOut();
    await  FirebaseAuth.instance.signOut();
   }
 
