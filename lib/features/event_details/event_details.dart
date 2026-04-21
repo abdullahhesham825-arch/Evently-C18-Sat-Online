@@ -1,5 +1,6 @@
 import 'package:evently_sat_online/core/resources/assets_manager.dart';
 import 'package:evently_sat_online/core/resources/colors_manager.dart';
+import 'package:evently_sat_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_sat_online/firebase/firebase_service.dart';
 import 'package:evently_sat_online/model/event_model.dart';
 import 'package:evently_sat_online/model/user_model.dart';
@@ -48,7 +49,13 @@ class _EventDetailsState extends State<EventDetails> {
             IconButton(
               icon: Image.asset("assets/images/edit.png"),
               onPressed: () {
-                // TODO: Edit Screen
+                Navigator.pushNamed(
+                  context,
+                  RoutesManager.editEvent,
+                  arguments: event,
+                ).then((_) {
+                  setState(() {});
+                });
               },
             ),
             IconButton(

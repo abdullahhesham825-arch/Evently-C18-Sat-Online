@@ -136,6 +136,10 @@ static Future<void>addEventToFireStore(EventModel event, BuildContext context){
  static Future<void> deleteEvent(String id, BuildContext context) {
    return getEventsCollection(context).doc(id).delete();
  }
+
+ static Future<void> updateEvent(EventModel event, BuildContext context) {
+   return getEventsCollection(context).doc(event.id).set(event);
+ }
 }
 
 

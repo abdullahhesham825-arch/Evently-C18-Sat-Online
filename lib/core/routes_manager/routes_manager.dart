@@ -1,6 +1,7 @@
 import 'package:evently_sat_online/features/auth/login/login_screen.dart';
 import 'package:evently_sat_online/features/auth/register/register_screen.dart';
 import 'package:evently_sat_online/features/create_event/create_event.dart';
+import 'package:evently_sat_online/features/edit_event/edit_event.dart';
 import 'package:evently_sat_online/features/event_details/event_details.dart';
 import 'package:evently_sat_online/features/home/home_screen.dart';
 import 'package:evently_sat_online/model/event_model.dart';
@@ -12,6 +13,7 @@ class RoutesManager{
   static const String homeScreen = '/homeScreen';
   static const String createEvent = '/createEvent';
   static const String eventDetails = '/eventDetails';
+  static const String editEvent = '/editEvent';
   static Route? router(RouteSettings settings){
     switch(settings.name){
       case login:{
@@ -30,7 +32,11 @@ class RoutesManager{
         final event = settings.arguments as EventModel;
         return CupertinoPageRoute(builder: (_)=>EventDetails(event: event,));
       }
+      case editEvent:{
+        final event = settings.arguments as EventModel;
+        return CupertinoPageRoute(builder: (_)=>EditEvent(event: event,));
+      }
     }
+    return null;
   }
 }
-
