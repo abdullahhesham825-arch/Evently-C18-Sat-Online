@@ -132,6 +132,10 @@ static Future<void>addEventToFireStore(EventModel event, BuildContext context){
   List<EventModel> favouriteEvents =  events.where((event)=>UserModel.currentUser!.favouriteEventsIds.contains(event.id)).toList();
   return favouriteEvents;
  }
+
+ static Future<void> deleteEvent(String id, BuildContext context) {
+   return getEventsCollection(context).doc(id).delete();
+ }
 }
 
 
